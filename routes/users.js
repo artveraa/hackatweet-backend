@@ -22,6 +22,9 @@ router.post('/signup', (req, res) => {
         username: req.body.username,
         nickname: req.body.nickname,
         password: hash,
+        avatar: '(O_O)',
+        // tweets: '673f0...',
+        // likes: '673f0...',
         token: uid2(32),
       });
 
