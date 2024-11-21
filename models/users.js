@@ -4,8 +4,8 @@ const usersSchema = mongoose.Schema({
   username: String,
   nickname: String,
   avatar: String,
-  email: String,
   password: String,
+  token: String,
   tweets: { type: mongoose.Schema.Types.ObjectId, ref: "tweets" },
   likes: { type: mongoose.Schema.Types.ObjectId, ref: "tweets" },
 });
