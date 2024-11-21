@@ -10,6 +10,6 @@ const usersSchema = mongoose.Schema({
   likes: { type: mongoose.Schema.Types.ObjectId, ref: "likes" },
 });
 
-const Users = mongoose.model("users", usersSchema);
+const User = mongoose.model("users", usersSchema);
 
-module.exports = Users;
+module.exports = User;
