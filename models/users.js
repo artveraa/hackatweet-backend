@@ -4,7 +4,7 @@ const usersSchema = mongoose.Schema({
   username: String,
   nickname: String,
   avatar: String,
-  email: String,
+  token: String,
   password: String,
   tweets: { type: mongoose.Schema.Types.ObjectId, ref: "tweets" },
   likes: { type: mongoose.Schema.Types.ObjectId, ref: "tweets" },
