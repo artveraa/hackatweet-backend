@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 const Users = require("./models/users");
+const Tweets = require("./models/tweets");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
