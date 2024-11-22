@@ -56,4 +56,22 @@ router.delete("/deleteTweet", (req, res) => {
   });
 });
 
+router.post("/toggleLike/:id", (req, res) => {
+  const update = req.body.isLiked
+    ? { $inc: { likes: -1 } }
+    : { $inc: { likes: 1 } };
+
+  Tweet.findByIdAndUpdate(req.params.id, update, { new: true })
+    .then((updatedTweet) => {
+      if (!updatedTweet) {
+        res.json({ result: false, error: "Tweet not found" });
+      } else {
+        res.json({ result: true, tweet: updatedTweet });
+      }
+    })
+    .catch((error) => {
+      res.json({ result: false, error: error.message });
+    });
+});
+
 module.exports = router;
