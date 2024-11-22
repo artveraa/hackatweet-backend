@@ -26,7 +26,7 @@ router.post("/postTweet/:token", (req, res) => {
     });
 
     newTweet.save().then((data) => {
-      res.json({ result: true, tweet: data });
+      res.json({ result: true, tweet: data.sort((a, b) => a.date - b.date) });
     });
   });
 });
@@ -34,6 +34,7 @@ router.post("/postTweet/:token", (req, res) => {
 router.get("/getTweets", (req, res) => {
   Tweet.find()
     .populate("user")
+    .sort({ date: -1 })
     .then((data) => {
       res.json({ result: true, tweet: data });
     });
