@@ -40,13 +40,10 @@ router.get("/getTweets", (req, res) => {
     });
 });
 
+router.delete("deleteTweet/:token", (req, res) => {
+  Tweet.find().populate("user");
 
-router.delete("/:token", (req, res) => {
-  Tweet.find()
-    .populate("username")
   
-  
-  })
-
+});
 
 module.exports = router;
