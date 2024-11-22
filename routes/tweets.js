@@ -1,36 +1,44 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-require('../models/connection');
-const Tweet = require('../models/tweets');
-const User = require('../models/users');
-const { checkBody } = require('../modules/checkBody');
+require("../models/connection");
+const Tweet = require("../models/tweets");
+const User = require("../models/users");
+const { checkBody } = require("../modules/checkBody");
 
-router.post('/tweeter/:token', (req, res) => {
-  if (!checkBody(req.body, ['content'])) {
-    res.json({ result: false, error: 'Missing or empty fields' });
+router.post("/postTweet/:token", (req, res) => {
+  if (!checkBody(req.body, ["content"])) {
+    res.json({ result: false, error: "Missing or empty fields" });
     return;
   }
-  User.findOne({token: req.params.token})
-  .then(dataFromUser => {
-  const date = new Date()
- const newTweet = new Tweet({
-        username: dataFromUser._id,
-        date: date,
-        content: req.body.content,
-        likes: 0,
-      });
 
-      newTweet.save().then(newTweet => {
-        res.json({ result: true, newTweet: newTweet });
-      });
-  });
-});
+  User.findOne({ token: req.params.token }).then((user) => {
+    if (!user) {
+      res.json({ result: false, error: "User not found" });
+      return;
+    }
 
-router.get('/getTweet', (req, res) => {
-  Tweet.find().then(data => {
+    const newTweet = new Tweet({
+      username: user._id,
+      nickname: user._id,
+      date: new Date(),
+      content: req.body.content,
+      likes: 0,
+    });
+
+    newTweet.save().then((data) => {
       res.json({ result: true, tweet: data });
+    });
   });
 });
 
-  module.exports = router;
+router.get("/getTweets", (req, res) => {
+  Tweet.find()
+    .populate("username")
+    .populate("nickname")
+    .then((data) => {
+      res.json({ result: true, tweet: data });
+    });
+});
+
+module.exports = router;
