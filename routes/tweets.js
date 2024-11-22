@@ -27,4 +27,10 @@ router.post('/tweeter/:token', (req, res) => {
   });
 });
 
+router.get('/getTweet', (req, res) => {
+  Tweet.find().then(data => {
+      res.json({ result: true, tweet: data });
+  });
+});
+
   module.exports = router;
