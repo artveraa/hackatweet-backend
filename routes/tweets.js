@@ -40,10 +40,20 @@ router.get("/getTweets", (req, res) => {
     });
 });
 
-router.delete("deleteTweet/:token", (req, res) => {
-  Tweet.find().populate("user");
+router.delete("/deleteTweet", (req, res) => {
+  if (!checkBody(req.body, ["content"])) {
+    res.json({ result: false, error: "Missing or empty fields" });
+    return;
+  }
 
-  
+  Tweet.findOneAndDelete({ content: req.body.content }).then((data) => {
+    if (!data) {
+      res.json({ result: false, error: "Tweet not found" });
+      return;
+    }
+
+    res.json({ result: true });
+  });
 });
 
 module.exports = router;
