@@ -19,23 +19,22 @@ router.post("/postTweet/:token", (req, res) => {
     }
 
     const newTweet = new Tweet({
-      username: user._id,
-      nickname: user._id,
+      user: user._id,
       date: new Date(),
       content: req.body.content,
       likes: 0,
     });
 
     newTweet.save().then((data) => {
-      res.json({ result: true, tweet: data });
+      res.json({ result: true, tweet: data.sort((a, b) => a.date - b.date) });
     });
   });
 });
 
 router.get("/getTweets", (req, res) => {
   Tweet.find()
-    .populate("username")
-    .populate("nickname")
+    .populate("user")
+    .sort({ date: -1 })
     .then((data) => {
       res.json({ result: true, tweet: data });
     });

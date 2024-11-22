@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 
 const tweetsSchema = mongoose.Schema({
-  username: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-  nickname: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
   date: Date,
   content: String,
   likes: Number,
