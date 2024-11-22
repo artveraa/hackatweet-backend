@@ -13,7 +13,6 @@ router.post("/signup", (req, res) => {
     return;
   }
 
-  // Check if the user has not already been registered
   User.findOne({ username: req.body.username }).then((data) => {
     if (data === null) {
       const hash = bcrypt.hashSync(req.body.password, 10);
@@ -22,9 +21,7 @@ router.post("/signup", (req, res) => {
         username: req.body.username,
         nickname: req.body.nickname,
         password: hash,
-        avatar: "(O_O)",
-        // tweets: '673f0...',
-        // likes: '673f0...',
+        avatar: null,
         token: uid2(32),
       });
 
@@ -38,7 +35,6 @@ router.post("/signup", (req, res) => {
         });
       });
     } else {
-      // User already exists in database
       res.json({ result: false, error: "User already exists" });
     }
   });
